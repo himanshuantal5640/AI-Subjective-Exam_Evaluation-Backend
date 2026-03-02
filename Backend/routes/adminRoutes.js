@@ -3,7 +3,6 @@ const adminController = require("../controllers/adminController");
 const auth = require("../middleware/authMiddleware");
 const role = require("../middleware/roleMiddleware");
 
-// Only Admin
 router.use(auth, role(["admin"]));
 
 router.get("/users", adminController.getUsers);

@@ -25,22 +25,21 @@ const answerSchema = new mongoose.Schema({
     required: true
   },
 
-  // ===== RULE-BASED =====
+  //RULE-BASED
   coveredConcepts: [String],
   missingConcepts: [String],
   coverageScore: Number,
   rubricScore: Number,
   qualityScore: Number,
-  aiFinalScore: Number, // rule-based weighted
+  aiFinalScore: Number, 
 
-  // ===== AI SEMANTIC =====
   aiSemanticScore: Number,
   aiSemanticFeedback: String,
 
-  // ===== HYBRID =====
+  
   hybridFinalScore: Number,
 
-  // ===== TEACHER CONTROL =====
+  
   teacherFinalScore: Number,
   isOverridden: {
     type: Boolean,

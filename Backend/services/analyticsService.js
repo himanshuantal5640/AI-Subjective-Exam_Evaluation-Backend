@@ -23,7 +23,7 @@ exports.getStudentAnalytics = async (studentId) => {
 
     totalScore += finalScore;
 
-    // Track concept mastery
+   
     a.coveredConcepts.forEach(concept => {
       conceptStats[concept] = (conceptStats[concept] || 0) + 1;
     });
@@ -32,7 +32,7 @@ exports.getStudentAnalytics = async (studentId) => {
   const averageScore =
     Math.round(totalScore / answers.length);
 
-  // Determine weak concepts
+
   const weakConcepts = Object.entries(conceptStats)
     .filter(([_, count]) => count < 2)
     .map(([concept]) => concept);
@@ -70,7 +70,7 @@ exports.getTeacherAnalytics = async (examId) => {
 
     totalScore += finalScore;
 
-    // Question difficulty tracking
+   
     questionStats[a.questionId] =
       questionStats[a.questionId] || {
         totalScore: 0,
@@ -80,7 +80,7 @@ exports.getTeacherAnalytics = async (examId) => {
     questionStats[a.questionId].totalScore += finalScore;
     questionStats[a.questionId].count += 1;
 
-    // Track missed concepts
+    
     a.missingConcepts.forEach(concept => {
       conceptMissStats[concept] =
         (conceptMissStats[concept] || 0) + 1;
@@ -90,7 +90,7 @@ exports.getTeacherAnalytics = async (examId) => {
   const classAverage =
     Math.round(totalScore / answers.length);
 
-  // Calculate difficulty index
+  
   const difficultyIndex = {};
 
   Object.keys(questionStats).forEach(qId => {
@@ -103,7 +103,7 @@ exports.getTeacherAnalytics = async (examId) => {
       : "Easy";
   });
 
-  // Most missed concepts
+ 
   const mostMissedConcepts =
     Object.entries(conceptMissStats)
       .sort((a, b) => b[1] - a[1])

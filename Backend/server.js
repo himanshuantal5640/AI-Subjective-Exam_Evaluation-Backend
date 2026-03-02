@@ -18,7 +18,7 @@ const io = new Server(server, {
   }
 });
 
-// 🔐 Socket Auth Middleware
+//Socket Auth Middleware
 io.use((socket, next) => {
   const token = socket.handshake.auth.token;
 
@@ -51,6 +51,6 @@ io.on("connection", (socket) => {
 
 const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });
 

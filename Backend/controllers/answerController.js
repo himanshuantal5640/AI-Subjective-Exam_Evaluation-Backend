@@ -25,7 +25,7 @@ exports.submitAnswer = async (req, res) => {
         message: "Question not found"
       });
 
-    // Prevent duplicate submission
+    
     const existingAnswer = await Answer.findOne({
       studentId: req.user.id,
       questionId
@@ -36,7 +36,7 @@ exports.submitAnswer = async (req, res) => {
         message: "Answer already submitted"
       });
 
-    // ===== RULE ENGINE =====
+
     const coverage =
       evaluationService.analyzeConceptCoverage(
         answerText,
@@ -59,7 +59,7 @@ exports.submitAnswer = async (req, res) => {
         qualityScore
       );
 
-    // ===== AI SEMANTIC (SAFE WRAPPER) =====
+  
     let aiScore = 0;
     let aiFeedback = "AI evaluation unavailable";
     let aiConfidence = "Low";

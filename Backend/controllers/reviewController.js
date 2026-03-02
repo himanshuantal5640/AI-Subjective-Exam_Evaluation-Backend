@@ -29,7 +29,7 @@ exports.overrideAnswerScore = async (req, res) => {
     const updated =
       await reviewService.overrideScore(
         req.params.answerId,
-        req.user.id, // 🔥 Teacher ID
+        req.user.id, 
         teacherFinalScore,
         teacherComment
       );

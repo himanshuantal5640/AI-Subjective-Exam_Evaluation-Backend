@@ -1,7 +1,7 @@
 
 const authService = require("../services/authService");
 
-// ================= REGISTER =================
+//  REGISTER 
 exports.register = async (req, res) => {
   try {
     await authService.registerUser(req.body);
@@ -11,7 +11,7 @@ exports.register = async (req, res) => {
   }
 };
 
-// ================= VERIFY OTP =================
+// VERIFY OTP 
 exports.verifyOTP = async (req, res) => {
   try {
     await authService.verifyOTP(req.body);
@@ -21,7 +21,7 @@ exports.verifyOTP = async (req, res) => {
   }
 };
 
-// ================= LOGIN =================
+//LOGIN
 exports.login = async (req, res) => {
   try {
     const { token, role } =
@@ -29,7 +29,7 @@ exports.login = async (req, res) => {
 
     res.cookie("token", token, {
       httpOnly: true,
-      secure: false, // true in production
+      secure: false, 
       sameSite: "lax",
       maxAge: 24 * 60 * 60 * 1000
     });
@@ -41,7 +41,7 @@ exports.login = async (req, res) => {
   }
 };
 
-// ================= FORGOT PASSWORD =================
+// FORGOT PASSWORD 
 exports.forgotPassword = async (req, res) => {
   try {
     await authService.sendResetOTP(req.body);
@@ -51,7 +51,7 @@ exports.forgotPassword = async (req, res) => {
   }
 };
 
-// ================= RESET PASSWORD =================
+// RESET PASSWORD 
 exports.resetPassword = async (req, res) => {
   try {
     await authService.resetPassword(req.body);
@@ -61,7 +61,7 @@ exports.resetPassword = async (req, res) => {
   }
 };
 
-// ================= LOGOUT =================
+//  LOGOUT 
 exports.logout = async (req, res) => {
   res.clearCookie("token");
   res.json({ message: "Logged out successfully" });

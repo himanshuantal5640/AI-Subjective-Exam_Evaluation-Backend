@@ -6,10 +6,10 @@ const { sendOTPEmail } = require("../config/mailer");
 
 const ADMIN_EMAIL = "himanshuantal26@gmail.com";
 
-// ================= REGISTER =================
+
 exports.registerUser = async ({ name, email, password, role }) => {
 
-  // Block admin public registration
+ 
   if (role === "admin")
     throw new Error("Admin registration is not allowed");
 
@@ -29,7 +29,7 @@ exports.registerUser = async ({ name, email, password, role }) => {
     isActive: true
   });
 
-  // Generate OTP
+  
   const otp = Math.floor(100000 + Math.random() * 900000).toString();
 
   user.otp = otp;
@@ -42,7 +42,7 @@ exports.registerUser = async ({ name, email, password, role }) => {
   return true;
 };
 
-// ================= VERIFY OTP (ACCOUNT ACTIVATION) =================
+
 exports.verifyOTP = async ({ email, otp }) => {
 
   const user = await User.findOne({ email });
@@ -55,11 +55,11 @@ exports.verifyOTP = async ({ email, otp }) => {
   if (!user.otp || !user.otpExpiresAt)
     throw new Error("No OTP found");
 
-  // Check expired first
+  
   if (user.otpExpiresAt < Date.now())
     throw new Error("OTP expired");
 
-  // Wrong OTP
+  
   if (user.otp !== otp) {
 
     user.otpAttempts += 1;
@@ -71,7 +71,7 @@ exports.verifyOTP = async ({ email, otp }) => {
     throw new Error("Invalid OTP");
   }
 
-  // SUCCESS
+ 
   user.isVerified = true;
   user.otp = undefined;
   user.otpExpiresAt = undefined;
@@ -83,7 +83,6 @@ exports.verifyOTP = async ({ email, otp }) => {
 };
 
 
-// ================= LOGIN =================
 exports.loginUser = async ({ email, password }) => {
 
   const user = await User.findOne({ email });
@@ -96,7 +95,7 @@ exports.loginUser = async ({ email, password }) => {
   if (!user.isVerified)
     throw new Error("Account not verified");
 
-  // Admin restriction
+  
   if (user.role === "admin" && user.email !== ADMIN_EMAIL)
     throw new Error("Unauthorized admin");
 
@@ -113,14 +112,14 @@ exports.loginUser = async ({ email, password }) => {
   return { token, role: user.role };
 };
 
-// ================= FORGOT PASSWORD =================
+
 exports.sendResetOTP = async ({ email }) => {
 
   const user = await User.findOne({ email });
   if (!user)
     throw new Error("User not found");
 
-  // Restrict admin reset
+ 
   if (user.role === "admin" && user.email !== ADMIN_EMAIL)
     throw new Error("Unauthorized admin reset");
 
@@ -136,7 +135,7 @@ exports.sendResetOTP = async ({ email }) => {
   return true;
 };
 
-// ================= RESET PASSWORD =================
+
 exports.resetPassword = async ({ email, otp, newPassword }) => {
 
   const user = await User.findOne({ email });
@@ -175,7 +174,7 @@ exports.resendOTP = async ({ email }) => {
   if (user.isVerified)
     throw new Error("Account already verified");
 
-  // Prevent spam (1 minute cooldown)
+
   if (
     user.otpLastSentAt &&
     Date.now() - user.otpLastSentAt < 60 * 1000

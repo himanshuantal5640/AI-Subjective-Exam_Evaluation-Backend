@@ -72,7 +72,7 @@ module.exports = (io) => {
         Array.from(onlineUsers.keys())
       );
 
-      console.log("❌ Disconnected:", userId);
+      console.log("Disconnected:", userId);
     });
 
   });

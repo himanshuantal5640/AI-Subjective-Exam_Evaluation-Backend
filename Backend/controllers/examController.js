@@ -22,3 +22,14 @@ exports.getMyExams = async (req, res) => {
     res.status(400).json({ message: err.message });
   }
 };
+// exports.getTeacherExams = async (req, res) => {
+//   try {
+//     const exams = await Exam.find({
+//       createdBy: req.user._id   // or teacherId depending on your model
+//     });
+
+//     res.json(exams);
+//   } catch (err) {
+//     res.status(500).json({ message: err.message });
+//   }
+// };
