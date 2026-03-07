@@ -23,6 +23,22 @@ exports.getMyExams = async (req, res) => {
   }
 };
 
+exports.toggleExamStatus = async (req, res) => {
+  try {
+    const exam = await examService.getExamById(req.params.id);
+    if (!exam || exam.teacherId.toString() !== req.user.id) {
+      return res.status(404).json({ message: "Exam not found or unauthorized" });
+    }
+
+    exam.status = exam.status === "active" ? "completed" : "active";
+    await exam.save();
+
+    res.json(exam);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
 exports.getAvailableExams = async (req, res) => {
   try {
     const exams = await examService.getAllExams();

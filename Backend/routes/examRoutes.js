@@ -10,6 +10,7 @@ router.post("/create", auth, role(["teacher"]), examController.createExam);
 
 
 router.get("/my-exams", auth, role(["teacher"]), examController.getMyExams);
+router.put("/:id/toggle-status", auth, role(["teacher"]), examController.toggleExamStatus);
 
 // Students can fetch available exams
 router.get("/available", auth, role(["student"]), examController.getAvailableExams);
