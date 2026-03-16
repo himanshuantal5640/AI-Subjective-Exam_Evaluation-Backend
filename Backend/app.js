@@ -40,8 +40,11 @@ app.use("/api/answers", answerRoutes);
 app.use("/api/review", reviewRoutes);
 app.use("/api/analytics", analyticsRoutes);
 app.use("/api/admin", adminRoutes);
-app.use("/api/chat",chatRoutes);
+app.use("/api/chat", chatRoutes);
 app.use("/api/users", userRoutes);
+
+const attendanceRoutes = require("./routes/attendanceRoutes");
+app.use("/api/attendance", attendanceRoutes);
 
 
 module.exports = app;

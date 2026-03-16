@@ -114,6 +114,14 @@ exports.submitAnswer = async (req, res) => {
       isOverridden: false
     });
 
+    // Automatically mark attendance as present
+    const Attendance = require("../models/Attendance");
+    await Attendance.findOneAndUpdate(
+      { studentId: req.user.id, examId },
+      { status: "present" },
+      { upsert: true, new: true }
+    );
+
     res.status(201).json(answer);
 
   } catch (err) {
